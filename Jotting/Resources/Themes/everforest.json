@@ -1,0 +1,19 @@
+{
+  "name": "Everforest",
+  "light": {
+    "background": "#FDF6E3",
+    "surface": "#BCC6A9",
+    "text": "#43554C",
+    "secondaryText": "#56675B",
+    "accent": "#576F35",
+    "selection": "#DCE6CF"
+  },
+  "dark": {
+    "background": "#2D353B",
+    "surface": "#52695C",
+    "text": "#D3C6AA",
+    "secondaryText": "#B6BCAA",
+    "accent": "#A7C080",
+    "selection": "#46594E"
+  }
+}

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Jotting — A scratchpad for your Mac.</title>
+    <meta name="description" content="Jotting is a free macOS menu bar scratchpad. Press Control + comma to jot down a thought, keep notes in tabs, and save drafts automatically on your Mac.">
+    <link rel="canonical" href="https://jotting.dev/">
+    <link rel="icon" type="image/png" href="public/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="public/jotting.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jotting.dev/">
+    <meta property="og:site_name" content="Jotting">
+    <meta property="og:title" content="Jotting — A scratchpad for your Mac.">
+    <meta property="og:description" content="A plain-text scratchpad for your Mac. One shortcut away, with tabs and automatic local saving.">
+    <meta property="og:image" content="https://jotting.dev/public/social.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Jotting, a plain-text scratchpad for macOS">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Jotting",
+        "url": "https://jotting.dev/",
+        "operatingSystem": "macOS 14 or later",
+        "applicationCategory": "ProductivityApplication",
+        "description": "A menu bar scratchpad for quick plain-text notes with tabs and local autosave.",
+        "downloadUrl": "https://cdn.jotting.dev/jotting.dmg",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <script>
+        try {
+            const theme = localStorage.getItem('jotting-theme');
+            if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        } catch {}
+    </script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --page: #171a1e;
+            --ink: #f1f2f4;
+            --muted: #b0b4bb;
+            --line: #363a40;
+            --bar: #31353b;
+            --edge: #545961;
+            --shadow: #090b0e66;
+            --button: #f1f2f4;
+            --button-text: #191c20;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+            background: var(--page);
+            color: var(--ink);
+        }
+
+        :root[data-theme="light"] {
+            color-scheme: light;
+            --page: #f6f7f8;
+            --ink: #202328;
+            --muted: #5c626c;
+            --line: #d8dce0;
+            --bar: #eef0f2;
+            --edge: #c7cbd1;
+            --shadow: #434b561c;
+            --button: #24272b;
+            --button-text: #fafbfc;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            max-width: 76rem;
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: auto;
+            padding: 0 clamp(1.25rem, 5vw, 4.5rem);
+            display: flex;
+            flex-direction: column;
+        }
+        a { color: inherit; text-decoration: none; }
+        button { font: inherit; cursor: pointer; }
+        [hidden] { display: none !important; }
+        :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+        .site-header, .brand, .download { display: flex; align-items: center; }
+        .site-header { min-height: 5rem; justify-content: space-between; }
+        .brand { gap: .45rem; font-size: 1.35rem; font-weight: 600; letter-spacing: -.045em; }
+        .brand img { object-fit: contain; }
+        .github-link { padding-block: .65rem; color: var(--muted); font-size: .875rem; }
+        .github-link:hover { color: var(--ink); }
+        .theme-toggle {
+            position: relative;
+            width: 3.25rem;
+            height: 2.75rem;
+            padding: 0;
+            border: 0;
+            border-radius: 1.5rem;
+            background: transparent;
+        }
+        .theme-toggle::before {
+            content: "";
+            position: absolute;
+            inset: .75rem .375rem;
+            border: 1px solid var(--edge);
+            border-radius: 2rem;
+            background: var(--bar);
+        }
+        .theme-toggle span {
+            position: absolute;
+            top: .875rem;
+            left: .5rem;
+            width: 1rem;
+            height: 1rem;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--button);
+            color: var(--button-text);
+            box-shadow: 0 1px 3px var(--shadow);
+        }
+        [data-theme="dark"] .theme-toggle span { transform: translateX(1.25rem); }
+        .theme-toggle svg { grid-area: 1 / 1; width: .7rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+        [data-theme="dark"] .theme-toggle .sun, [data-theme="light"] .theme-toggle .moon {
+            opacity: 0;
+            transform: scale(.7) rotate(-25deg);
+        }
+
+        main { flex: 1; display: grid; align-items: center; }
+        .hero {
+            display: grid;
+            justify-items: center;
+            gap: clamp(1.8rem, 4vh, 2.6rem);
+            padding: clamp(2rem, 5vh, 4.5rem) 0 clamp(3rem, 7vh, 6rem);
+        }
+        .intro, .actions { text-align: center; }
+        h1 {
+            margin: 0;
+            font-size: clamp(2.65rem, 5.6vw, 4.8rem);
+            font-weight: 500;
+            letter-spacing: -.062em;
+            line-height: 1.08;
+            text-wrap: balance;
+        }
+        .description {
+            max-width: 28rem;
+            margin: 1rem auto 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.55;
+            text-wrap: pretty;
+        }
+        .preview { display: grid; width: min(100%, 46rem); }
+        .preview img { grid-area: 1 / 1; display: block; width: 100%; height: auto; }
+        .preview-light, [data-theme="light"] .preview-dark { opacity: 0; }
+        [data-theme="light"] .preview-light { opacity: 1; }
+        .download {
+            display: inline-flex;
+            gap: .5rem;
+            padding: .8rem 1.25rem .8rem 1.08rem;
+            border-radius: .7rem;
+            background: var(--button);
+            color: var(--button-text);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .download svg { width: 1.35rem; height: 1.35rem; }
+        @media (hover: hover) {
+            .download:hover { background-color: color-mix(in srgb, var(--button) 88%, var(--button-text)); }
+        }
+        .download:focus-visible { background-color: color-mix(in srgb, var(--button) 88%, var(--button-text)); }
+        .download:active { background-color: color-mix(in srgb, var(--button) 78%, var(--button-text)); }
+        .requirements { margin: .72rem 0 0; font-size: .82rem; color: var(--muted); }
+        .requirements span { margin: 0 .2rem; }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.3rem 0;
+            color: var(--muted);
+            font-size: .8rem;
+        }
+        footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            :root { transition: background-color 180ms ease-in-out, color 180ms ease-in-out; }
+            .description, .requirements, footer { transition: color 180ms; }
+            .theme-toggle span {
+                transition: transform 180ms cubic-bezier(.45, 0, .2, 1), background-color 180ms, color 180ms;
+            }
+            .theme-toggle::before { transition: background-color 180ms, border-color 180ms; }
+            .theme-toggle svg { transition: opacity 130ms ease-in-out, transform 180ms ease-in-out; }
+            .preview img { transition: opacity 180ms ease-in-out; }
+            .download { transition: background-color 200ms ease-in-out; }
+        }
+
+        @media (max-width: 32rem) {
+            .site-header { min-height: 4rem; }
+            .hero { gap: 1.75rem; }
+            .description { margin-top: .75rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Jotting home"><img src="public/jotting.png" width="39" height="39" alt="">Jotting</a>
+        <a class="github-link" href="https://github.com/exelban/jotting">GitHub</a>
+    </header>
+    <main>
+        <section class="hero" aria-labelledby="headline">
+            <div class="intro">
+                <h1 id="headline">A scratchpad for your Mac.</h1>
+                <p class="description">Jot down a thought, close the window, and pick up where you left off.</p>
+            </div>
+            <div class="preview">
+                <img class="preview-dark" src="public/jotting-dark.png" width="1624" height="784" alt="Jotting on macOS showing a photo walk note with Field notes, Packing list, and Ideas tabs.">
+                <img class="preview-light" src="public/jotting-light.png" width="1624" height="784" alt="">
+            </div>
+            <div class="actions">
+                <a class="download" href="https://cdn.jotting.dev/jotting.dmg" download>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.1 12.5c0-2 1.6-3.1 1.7-3.2-1-1.5-2.6-1.7-3.1-1.7-1.3-.2-2.5.8-3.2.8-.7 0-1.6-.8-2.7-.8-1.4 0-2.7.8-3.4 2-1.4 2.4-.4 6 1 8 .7 1 1.4 2 2.5 2s1.4-.7 2.7-.7 1.7.7 2.8.7 1.8-1 2.5-2c.8-1.1 1.1-2.2 1.2-2.3-.1 0-2-.8-2-2.8ZM15.1 6.3c.6-.7 1.1-1.8 1-2.8-1 .1-2.1.6-2.8 1.3-.6.6-1.2 1.7-1 2.7 1 .1 2.1-.5 2.8-1.2Z"/></svg>
+                    Download for Mac
+                </a>
+                <p class="requirements">Free <span>·</span> macOS 14 or later</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <span>© 2026 Jotting by <a href="https://serhiy.io">exelban</a></span>
+        <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="true" hidden>
+            <span aria-hidden="true">
+                <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                <svg class="moon" viewBox="0 0 24 24"><path d="M20.6 13.1A8.8 8.8 0 0 1 10.9 3.4a8.8 8.8 0 1 0 9.7 9.7Z"/></svg>
+            </span>
+        </button>
+    </footer>
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        function applyTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+        }
+
+        applyTheme(document.documentElement.dataset.theme);
+        themeToggle.hidden = false;
+        themeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(theme);
+            try {
+                localStorage.setItem('jotting-theme', theme);
+            } catch {}
+        });
+    </script>
+    <script defer src="https://analytics.jotting.dev/script.js" data-website-id="2fa442f7-a539-4726-a72d-f446d9818f35"></script>
+</body>
+</html>

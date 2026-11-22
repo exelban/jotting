@@ -1,0 +1,19 @@
+{
+  "name": "Catppuccin",
+  "light": {
+    "background": "#EFF1F5",
+    "surface": "#BABCD3",
+    "text": "#4C4F69",
+    "secondaryText": "#62667D",
+    "accent": "#8839EF",
+    "selection": "#CCD0DA"
+  },
+  "dark": {
+    "background": "#1E1E2E",
+    "surface": "#505169",
+    "text": "#CDD6F4",
+    "secondaryText": "#A6ADC8",
+    "accent": "#CBA6F7",
+    "selection": "#45475A"
+  }
+}

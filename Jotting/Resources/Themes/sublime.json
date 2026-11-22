@@ -1,0 +1,23 @@
+{
+  "name": "Sublime",
+  "light": {
+    "background": "#F3F5F7",
+    "surface": "#F3F5F7",
+    "text": "#303D49",
+    "label": "#25323E",
+    "secondaryText": "#354450",
+    "caret": "#9C5700",
+    "accent": "#427150",
+    "selection": "#C9D8E4"
+  },
+  "dark": {
+    "background": "#303841",
+    "surface": "#303841",
+    "text": "#D8DEE9",
+    "label": "#FFFFFF",
+    "secondaryText": "#E8EBEF",
+    "caret": "#F9AE58",
+    "accent": "#5C99D6",
+    "selection": "#4D5864"
+  }
+}

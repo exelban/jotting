@@ -1,0 +1,19 @@
+{
+  "name": "Gruvbox",
+  "light": {
+    "background": "#FBF1C7",
+    "surface": "#C8B687",
+    "text": "#3C3836",
+    "secondaryText": "#665C54",
+    "accent": "#AF3A03",
+    "selection": "#EBD9A4"
+  },
+  "dark": {
+    "background": "#282828",
+    "surface": "#665C54",
+    "text": "#EBDBB2",
+    "secondaryText": "#BDAE93",
+    "accent": "#FABD2F",
+    "selection": "#504945"
+  }
+}

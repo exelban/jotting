@@ -1,0 +1,19 @@
+{
+  "name": "Atom One",
+  "light": {
+    "background": "#FAFAFA",
+    "surface": "#BFCAD7",
+    "text": "#383A42",
+    "secondaryText": "#565C64",
+    "accent": "#4078F2",
+    "selection": "#C8DCFA"
+  },
+  "dark": {
+    "background": "#282C34",
+    "surface": "#526176",
+    "text": "#ABB2BF",
+    "secondaryText": "#A0A7B3",
+    "accent": "#61AFEF",
+    "selection": "#3E4F66"
+  }
+}

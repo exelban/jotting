@@ -1,0 +1,4 @@
+scripts:
+  dev: npx --yes wrangler@4 dev --assets .
+  build: mkdir -p dist && rsync -a --delete --exclude=.DS_Store index.html public dist/
+  deploy: one build && npx wrangler pages deploy ./dist --project-name jotting --branch master --commit-dirty=true

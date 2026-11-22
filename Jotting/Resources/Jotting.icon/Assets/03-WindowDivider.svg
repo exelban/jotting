@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+        <linearGradient id="yellow" x1="280" y1="320" x2="820" y2="840" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FBE55A"/>
+      <stop offset="1" stop-color="#F4C816"/>
+    </linearGradient>
+    <linearGradient id="windowFill" x1="145" y1="200" x2="770" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FCFBFD"/>
+      <stop offset="1" stop-color="#EFECF4"/>
+    </linearGradient>
+    <linearGradient id="lineFill" x1="250" y1="430" x2="790" y2="610" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9BDCC"/>
+      <stop offset="1" stop-color="#9EA4BA"/>
+    </linearGradient>
+    <radialGradient id="red" cx="35%" cy="28%" r="80%">
+      <stop offset="0" stop-color="#FF6A63"/>
+      <stop offset="1" stop-color="#FF302C"/>
+    </radialGradient>
+    <radialGradient id="yellowDot" cx="35%" cy="28%" r="80%">
+      <stop offset="0" stop-color="#FFD34C"/>
+      <stop offset="1" stop-color="#F5BA00"/>
+    </radialGradient>
+    <radialGradient id="greenDot" cx="35%" cy="28%" r="80%">
+      <stop offset="0" stop-color="#36DE31"/>
+      <stop offset="1" stop-color="#1FC61D"/>
+    </radialGradient>
+  </defs>
+  <g transform="rotate(-5 457 500)">
+    <line id="window-divider" x1="112" y1="322" x2="802" y2="322" stroke="#B8B4C3" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
