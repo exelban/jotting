@@ -1,0 +1,19 @@
+{
+  "name": "Solarized",
+  "light": {
+    "background": "#FDF6E3",
+    "surface": "#C3BBA5",
+    "text": "#586E75",
+    "secondaryText": "#596B70",
+    "accent": "#007E80",
+    "selection": "#DDD8BF"
+  },
+  "dark": {
+    "background": "#002B36",
+    "surface": "#41636A",
+    "text": "#93A1A1",
+    "secondaryText": "#91A1A1",
+    "accent": "#2AA198",
+    "selection": "#164B55"
+  }
+}

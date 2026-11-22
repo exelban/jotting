@@ -1,0 +1,19 @@
+{
+  "name": "GitHub",
+  "light": {
+    "background": "#FFFFFF",
+    "surface": "#C5D2E1",
+    "text": "#1F2328",
+    "secondaryText": "#59636E",
+    "accent": "#0969DA",
+    "selection": "#B6D7FC"
+  },
+  "dark": {
+    "background": "#0D1117",
+    "surface": "#38485D",
+    "text": "#E6EDF3",
+    "secondaryText": "#9CAAB7",
+    "accent": "#58A6FF",
+    "selection": "#233E62"
+  }
+}

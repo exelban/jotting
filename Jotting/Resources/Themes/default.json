@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "light": {
+    "background": "textBackgroundColor",
+    "surface": "controlBackgroundColor",
+    "text": "textColor",
+    "label": "labelColor",
+    "secondaryText": "secondaryLabelColor",
+    "accent": "controlAccentColor",
+    "selection": "selectedTextBackgroundColor"
+  },
+  "dark": {
+    "background": "textBackgroundColor",
+    "surface": "controlBackgroundColor",
+    "text": "textColor",
+    "label": "labelColor",
+    "secondaryText": "secondaryLabelColor",
+    "accent": "controlAccentColor",
+    "selection": "selectedTextBackgroundColor"
+  }
+}

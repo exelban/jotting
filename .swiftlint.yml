@@ -1,0 +1,88 @@
+disabled_rules:
+  - force_cast # todo
+  - type_name # todo
+  - trailing_whitespace
+  - opening_brace
+  - implicit_getter
+  - implicit_optional_initialization
+  - large_tuple
+
+analyzer_rules:
+  - explicit_self
+
+opt_in_rules:
+  - control_statement
+  - empty_count
+  - trailing_newline
+  - colon
+  - comma
+
+custom_rules:
+  inline_control_flow:
+    regex: '(?m)\b(if|guard|for|while)\b(?=[^\n]*\{[^{}\n]+\}[ \t]*$)'
+    capture_group: 1
+    match_kinds: keyword
+    message: "Put the body of a control statement on separate lines."
+    severity: warning
+  nested_ternary:
+    regex: '(?<=[ \t])\?[ \t]+(?=[^,;{}\n]*[ \t]\?[ \t])'
+    match_kinds: []
+    message: "Use explicit branches for nested ternary expressions."
+    severity: warning
+  declaration_after_block:
+    regex: '(?m)^([ \t]*)\}\n\1(let|var)\b'
+    capture_group: 2
+    match_kinds: keyword
+    message: "Separate a completed block from the next declaration with a blank line."
+    severity: warning
+  blank_line_indentation:
+    regex: '(?m)^([ \t]*)\S[^\r\n]*\r?\n(?!\1\r?$)([ \t]*\r?\n)'
+    capture_group: 2
+    message: "Indent the blank line to match the preceding line."
+    severity: warning
+
+identifier_name:
+  min_length: 1
+  excluded:
+    - AppUpdateIntervals
+    - TemperatureUnits
+    - SpeedBase
+    - SensorsWidgetMode
+    - SpeedPictogram
+    - BatteryAdditionals
+    - ShortLong
+    - ReaderUpdateIntervals
+    - NumbersOfProcesses
+    - NetworkReaders
+    - SensorsList
+    - Alignments
+    - _devices
+    - _uuidAddress
+    - AppleSiliconSensorsList
+    - FanValues
+    - CombinedModulesSpacings
+    - BatteryInfo
+    - PublicIPAddressRefreshIntervals
+    - _values
+    - _writeTS
+    - LineChartHistory
+    - SpeedPictogramColor
+    - SensorsWidgetValue
+    - access_token
+    - refresh_token
+    - device_code
+    - user_code
+    - verification_uri_complete
+    - expires_in
+    - NetworkSpeedUnitAuto
+    - NetworkSpeedUnits
+
+line_length: 140
+
+type_body_length:
+  - 700
+  - 1000
+
+file_length:
+  - 1400
+  - 1800

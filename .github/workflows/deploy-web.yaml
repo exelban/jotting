@@ -1,0 +1,22 @@
+name: Deploy web
+
+on:
+  push:
+    branches: [master]
+    paths: ['web/**']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Pages
+        working-directory: web
+        run: |
+          mkdir "$RUNNER_TEMP/site"
+          cp -R index.html public "$RUNNER_TEMP/site/"
+          npx --yes wrangler@4 pages deploy "$RUNNER_TEMP/site" --project-name jotting --branch master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

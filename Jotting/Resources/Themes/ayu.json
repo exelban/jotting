@@ -1,0 +1,19 @@
+{
+  "name": "Ayu",
+  "light": {
+    "background": "#FAFAFA",
+    "surface": "#D1C4A9",
+    "text": "#535B65",
+    "secondaryText": "#596470",
+    "accent": "#B36105",
+    "selection": "#F1DBB4"
+  },
+  "dark": {
+    "background": "#0B0E14",
+    "surface": "#464C58",
+    "text": "#BFBDB6",
+    "secondaryText": "#A4A6A7",
+    "accent": "#E6B450",
+    "selection": "#363D49"
+  }
+}

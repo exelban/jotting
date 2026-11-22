@@ -1,0 +1,19 @@
+{
+  "name": "Rosé Pine",
+  "light": {
+    "background": "#FAF4ED",
+    "surface": "#CFBAC5",
+    "text": "#575279",
+    "secondaryText": "#68617E",
+    "accent": "#907AA9",
+    "selection": "#E8D8DE"
+  },
+  "dark": {
+    "background": "#191724",
+    "surface": "#51455E",
+    "text": "#E0DEF4",
+    "secondaryText": "#B3AEC7",
+    "accent": "#C4A7E7",
+    "selection": "#403D52"
+  }
+}
