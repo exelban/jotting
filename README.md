@@ -1,45 +1,45 @@
 # Jotting
 
 <p align="center">
-  <img src="https://serhiy.s3.eu-central-1.amazonaws.com/github/jotting/icon.png" alt="Jotting app icon" width="128" height="128">
+  <img src="web/public/icon.png" alt="Jotting app icon" width="128" height="128">
 </p>
 
-<picture>
-  <source type="image/webp" srcset="https://serhiy.s3.eu-central-1.amazonaws.com/github/jotting/preview.webp">
-  <img src="https://serhiy.s3.eu-central-1.amazonaws.com/github/jotting/preview.png" alt="Jotting scratchpad showing a photo walk note with three tabs open">
-</picture>
+![A simple macOS scratchpad for quick plain-text notes](web/public/preview.png)
 
 A simple macOS scratchpad for quick plain-text notes.
 
+## Features
+
+- **Quick access.** The menu bar icon or a global shortcut (Control + comma by default) brings the scratchpad forward.
+- **Autosaved notes.** Jotting keeps each note as you type, even before you give it a name. It can also open and save plain-text and Markdown files.
+- **Tabs and windows.** Each note has its own tab. Tabs can be named, reordered, or moved between windows.
+- **Custom themes.** Choose a built-in theme or create a JSON theme with your own light and dark color palettes.
+
 ## Install
 
-Jotting runs on **macOS 14 (Sonoma) or later**. Download `Jotting.dmg` from the [GitHub releases page](https://github.com/exelban/jotting/releases), open the disk image, and drag Jotting into Applications.
+Requires **macOS 14 (Sonoma) or later**.
 
-## Using the scratchpad
+1. Download `Jotting.dmg` from [GitHub Releases](https://github.com/exelban/jotting/releases).
+2. Open the disk image and drag **Jotting** into **Applications**.
+3. Launch Jotting. You can open the scratchpad from its menu bar icon or with **Control + comma**. Press the shortcut again while the scratchpad is focused to close that window.
 
-Launch Jotting, then click its menu bar icon or press **Control + comma** to bring the scratchpad forward. Press the same shortcut while the scratchpad is focused to close that window. Start typing in the current tab, or press **⌘T** for a fresh one. Double-click a tab to name it.
+## Configuration
 
-Hold **Option** and drag a tab to reorder it. Drop it on another Jotting tab bar to move it there, or release it elsewhere outside the source window to open it in a new window. Press **Esc** to cancel.
+You can find the settings file at `~/Library/Application Support/Jotting/config.json`.
 
-| To | Press |
-| --- | --- |
-| Switch to the next or previous tab | Control + Tab or Control + Shift + Tab |
-| Jump to one of the first eight tabs | ⌘1 through ⌘8 |
-| Jump to the last tab | ⌘9 |
-| Find text in the current tab | ⌘F |
-| Hide the scratchpad | ⌘H |
+Open it with **Jotting → Settings…** (**⌘,**). Press **⌘S** to apply changes.
 
-Jotting saves each open tab as you type. Press **⌘S** to save pending edits in Jotting immediately. Use **⌘O** to open an existing note. To write your edits back to that file or save a new `.txt` or `.md` file, choose **File → Save As…** (**⇧⌘S**).
+- **`application`** controls whether Jotting launches at login, whether its icons appear in the Dock and menu bar, and which global shortcut opens the scratchpad.
+- **`interface`** controls the color theme, system/light/dark appearance, classic or glass background, and line markers (none, dots, or numbers).
+- **`font`** controls the editor’s font family, size (8–72 pt), weight, and line height (1–3×).
 
-## Settings
+The **?** button in the settings tab lists supported values.
 
-Choose **Jotting → Settings…** (**⌘,**) to open the JSON settings in a tab. Edit the global shortcut, theme, font, or line markers, then press **⌘S** to apply your changes. The `application` section contains `launchAtLogin`, `dockIcon`, `menuBar`, and `globalShortcut`. The Dock icon is enabled by default. Set `"dockIcon": false` to hide it. In the `interface` section, set `"lineMarker": "number"` to show line numbers.
+## Custom theme
 
-In the same section, set `"interfaceStyle": "glass"` to let the colors of windows behind Jotting show faintly through the editor and title bar. The background is blurred and tinted with your theme color. Use `"interfaceStyle": "classic"` for the default opaque background.
+Copy a [built-in theme](Jotting/Resources/Themes/dracula.json) to `~/Library/Application Support/Jotting/Themes/my-theme.json`. Edit the colors in both the `light` and `dark` palettes using `#RRGGBB` values.
 
-## Run from source
-
-Open `Jotting.xcodeproj` in Xcode, select the **Jotting** scheme, and press **⌘R**.
+In the `interface` section of your settings, set `"theme": "my-theme"` to match the filename without its extension. Press **⌘S** to apply it.
 
 ## License
 
