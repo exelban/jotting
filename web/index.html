@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <title>Jotting — A scratchpad for your Mac.</title>
+    <title>Jotting - A scratchpad for your Mac.</title>
     <meta name="description" content="Jotting is a free macOS menu bar scratchpad. Press Control + comma to jot down a thought, keep notes in tabs, and save drafts automatically on your Mac.">
     <link rel="canonical" href="https://jotting.dev/">
     <link rel="icon" type="image/x-icon" href="public/favicon.ico" sizes="32x32">
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jotting.dev/">
     <meta property="og:site_name" content="Jotting">
-    <meta property="og:title" content="Jotting — A scratchpad for your Mac.">
+    <meta property="og:title" content="Jotting - A scratchpad for your Mac.">
     <meta property="og:description" content="A plain-text scratchpad for your Mac. One shortcut away, with tabs and automatic local saving.">
     <meta property="og:image" content="https://jotting.dev/public/social.jpg">
     <meta property="og:image:width" content="1200">
@@ -41,54 +41,209 @@
     <style>
         :root {
             color-scheme: dark;
-            --page: #171a1e;
-            --ink: #f1f2f4;
-            --muted: #b0b4bb;
-            --line: #363a40;
-            --bar: #31353b;
-            --edge: #545961;
-            --shadow: #090b0e66;
-            --button: #f1f2f4;
-            --button-text: #191c20;
+            --page: #09090d;
+            --ink: #f7f5fc;
+            --muted: #b6b2c2;
+            --line: #ffffff1a;
+            --panel: #131319;
+            --bar: #28272f;
+            --edge: #55525f;
+            --shadow: #0005;
+            --button: #f2effc;
+            --button-text: #25212e;
+            --accent: #c6b3ff;
             font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
             background: var(--page);
             color: var(--ink);
+            scroll-padding-top: 6rem;
         }
 
         :root[data-theme="light"] {
             color-scheme: light;
-            --page: #f6f7f8;
-            --ink: #202328;
-            --muted: #5c626c;
-            --line: #d8dce0;
-            --bar: #eef0f2;
-            --edge: #c7cbd1;
-            --shadow: #434b561c;
-            --button: #24272b;
-            --button-text: #fafbfc;
+            --page: #faf9fc;
+            --ink: #201d26;
+            --muted: #605b6b;
+            --line: #2e20451c;
+            --panel: #f3f1f6;
+            --bar: #e9e5ef;
+            --edge: #a19aa9;
+            --shadow: #40324c25;
+            --button: #30283e;
+            --button-text: #fff;
+            --accent: #654392;
         }
 
         * { box-sizing: border-box; }
-        body {
-            max-width: 76rem;
-            min-height: 100vh;
-            min-height: 100svh;
-            margin: auto;
-            padding: 0 clamp(1.25rem, 5vw, 4.5rem);
-            display: flex;
-            flex-direction: column;
-        }
+        body { margin: 0; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
         button { font: inherit; cursor: pointer; }
         [hidden] { display: none !important; }
-        :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+        .wrap { width: min(67rem, calc(100% - 3rem)); margin-inline: auto; }
+        h1, h2, h3, p, figure { margin: 0; }
+        h1, h2, h3 { text-wrap: balance; }
+        p { text-wrap: pretty; }
+        .site-header {
+            position: fixed;
+            inset: .75rem 0 auto;
+            z-index: 2;
+            width: min(64rem, calc(100% - 2rem));
+            min-height: 3.5rem;
+            margin-inline: auto;
+            padding-inline: 1rem;
+            gap: 1rem;
+            border-radius: 2rem;
+        }
+        .site-header.scrolled {
+            background: color-mix(in srgb, var(--panel) 75%, transparent);
+            box-shadow: 0 0 0 1px var(--line), 0 .45rem 1.25rem var(--shadow);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
+        }
+        .site-header, .brand, .footer-inner { display: flex; align-items: center; }
+        .brand { gap: .4rem; font-weight: 650; letter-spacing: -.045em; font-size: 1.15rem; }
+        .header-github { margin-left: auto; padding-block: .45rem; color: var(--muted); font-size: .875rem; }
+        .header-github:hover, footer a:hover { color: var(--ink); }
+        .download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .45rem;
+            padding: .8rem 1.35rem;
+            border-radius: 2rem;
+            background: var(--ink);
+            color: var(--page);
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.25;
+        }
+        .download:hover { background: color-mix(in srgb, var(--ink) 85%, var(--page)); }
+        .download svg { width: 1.25rem; height: 1.25rem; }
+        .site-header .download { padding: .5rem 1.125rem; font-size: .875rem; }
 
-        .site-header, .brand, .download { display: flex; align-items: center; }
-        .site-header { min-height: 5rem; justify-content: space-between; }
-        .brand { gap: .45rem; font-size: 1.35rem; font-weight: 600; letter-spacing: -.045em; }
-        .brand img { object-fit: contain; }
-        .github-link { padding-block: .65rem; color: var(--muted); font-size: .875rem; }
-        .github-link:hover { color: var(--ink); }
+        .hero {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            padding: calc(4.25rem + clamp(1.5rem, 4vw, 3rem)) 0 0;
+            text-align: center;
+            background: radial-gradient(ellipse 37% 43% at 50% 0%, #9b7bdb31, transparent),
+                radial-gradient(ellipse 60% 34% at 43% 12%, #9d615719, transparent);
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: -5% -10% auto;
+            height: 38rem;
+            background: conic-gradient(from 132deg at 50% 0%, transparent 2deg, #a379df36 14deg,
+                transparent 23deg, #e9aa6e22 32deg, transparent 43deg, #9f86f138 56deg,
+                transparent 66deg, #a978ce28 83deg, transparent 93deg);
+            filter: blur(13px);
+            mask-image: linear-gradient(#000, transparent 96%);
+        }
+        .app-icon {
+            display: block;
+            width: clamp(4.75rem, 7.5vw, 6.5rem);
+            height: auto;
+            margin: 0 auto 1rem;
+            filter: drop-shadow(0 .6rem 2.3rem #ac85f24d);
+        }
+        h1 {
+            max-width: 15ch;
+            margin-inline: auto;
+            font-size: clamp(3rem, 6vw, 4.65rem);
+            line-height: 1.02;
+            font-weight: 630;
+            letter-spacing: -.059em;
+        }
+        .description { color: var(--muted); font-size: clamp(1rem, 1.8vw, 1.18rem); line-height: 1.55; }
+        .description { max-width: 42ch; margin: 1.2rem auto 1.65rem; }
+        .requirements { margin: .8rem 0 0; font-size: .85rem; color: var(--muted); }
+        .stage {
+            position: relative;
+            isolation: isolate;
+            max-width: 54.5rem;
+            margin: .5rem auto 2rem;
+        }
+        .stage::before {
+            content: "";
+            position: absolute;
+            inset: 2% 4% 5%;
+            z-index: -1;
+            background: radial-gradient(ellipse at 30% 46%, #a489de39, transparent 60%),
+                radial-gradient(ellipse at 76% 63%, #d4a58426, transparent 65%);
+            filter: blur(24px);
+        }
+        .preview { display: grid; }
+        .preview img { grid-area: 1 / 1; width: 100%; height: auto; }
+        .preview-light, [data-theme="light"] .preview-dark { visibility: hidden; }
+        [data-theme="light"] .preview-light { visibility: visible; }
+
+        .section { margin-top: clamp(4.5rem, 10vw, 8.25rem); }
+        h2 { font-size: clamp(2.35rem, 4.6vw, 3.7rem); line-height: 1.06; letter-spacing: -.052em; font-weight: 610; }
+        h3 { font-size: 1.38rem; letter-spacing: -.032em; font-weight: 600; }
+        .tabs-feature {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            align-items: center;
+            gap: 2rem;
+            padding: clamp(1.5rem, 5vw, 4rem);
+            margin: 2.2rem 0;
+            border: 1px solid var(--line);
+            border-radius: 1.4rem;
+            background: radial-gradient(ellipse at 90% 100%, #8261a929, transparent 65%), var(--panel);
+        }
+        .tabs-feature img { display: block; width: 100%; height: auto; }
+        .feature-copy { max-width: 36ch; margin-top: .7rem; color: var(--muted); line-height: 1.6; }
+        .features-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+        .sample {
+            min-height: 12.5rem;
+            margin-bottom: 1.4rem;
+            border: 1px solid var(--line);
+            border-radius: 1.1rem;
+            display: grid;
+            place-content: center;
+            background: radial-gradient(ellipse at 50% 95%, #a88bcd16, transparent 80%), var(--panel);
+        }
+        .keycaps { display: flex; gap: .65rem; }
+        kbd {
+            width: 4rem;
+            height: 3.8rem;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--edge);
+            border-radius: .75rem;
+            background: linear-gradient(150deg, var(--bar), var(--panel));
+            box-shadow: 0 4px 0 var(--bar), 0 7px 12px var(--shadow);
+            font: 1.8rem ui-monospace, monospace;
+        }
+        .color-sample { grid-template-rows: auto 1fr; justify-content: stretch; align-content: stretch; overflow: hidden; }
+        .palettes { display: flex; align-items: center; gap: .3rem; padding: .8rem; border-bottom: 1px solid var(--line); }
+        .palettes label { position: relative; padding: .4rem .55rem; border-radius: .4rem; font-size: .85rem; color: var(--muted); cursor: pointer; }
+        .palettes input { position: absolute; opacity: 0; }
+        .palettes label:has(:checked) { background: var(--bar); color: var(--ink); }
+        .palettes label:focus-within { outline: 2px solid var(--accent); }
+        .theme-note {
+            --paper: #282a36;
+            --text: #f8f8f2;
+            --cursor: #bd93f9;
+            display: grid;
+            align-content: center;
+            padding: 1.5rem;
+            background: var(--paper);
+            color: var(--text);
+            font: .95rem/1.7 ui-monospace, monospace;
+        }
+        .color-sample:has([value="tokyo"]:checked) .theme-note { --paper: #1a1b26; --text: #c0caf5; --cursor: #7aa2f7; }
+        .color-sample:has([value="gruvbox"]:checked) .theme-note { --paper: #282828; --text: #ebdbb2; --cursor: #fabd2f; }
+        .theme-note p:last-child::after { content: ""; border-right: 2px solid var(--cursor); margin-left: 2px; }
+        .closing { padding: clamp(4.5rem, 9vw, 7rem) 1.5rem; text-align: center; background: radial-gradient(ellipse 42% 88% at 50% 100%, #8c65be18, transparent); }
+        .closing img { width: 4rem; height: auto; margin-bottom: 1rem; }
+        .closing .download { margin-top: 1.7rem; }
+        footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+        .footer-inner { min-height: 5rem; gap: 1.25rem; }
+        .footer-inner > span { margin-right: auto; }
         .theme-toggle {
             position: relative;
             width: 3.25rem;
@@ -126,117 +281,110 @@
             transform: scale(.7) rotate(-25deg);
         }
 
-        main { flex: 1; display: grid; align-items: center; }
-        .hero {
-            display: grid;
-            justify-items: center;
-            gap: clamp(1.8rem, 4vh, 2.6rem);
-            padding: clamp(2rem, 5vh, 4.5rem) 0 clamp(3rem, 7vh, 6rem);
-        }
-        .intro, .actions { text-align: center; }
-        h1 {
-            margin: 0;
-            font-size: clamp(2.65rem, 5.6vw, 4.8rem);
-            font-weight: 500;
-            letter-spacing: -.062em;
-            line-height: 1.08;
-            text-wrap: balance;
-        }
-        .description {
-            max-width: 28rem;
-            margin: 1rem auto 0;
-            color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.55;
-            text-wrap: pretty;
-        }
-        .preview { display: grid; width: min(100%, 46rem); }
-        .preview img { grid-area: 1 / 1; display: block; width: 100%; height: auto; }
-        .preview-light, [data-theme="light"] .preview-dark { opacity: 0; }
-        [data-theme="light"] .preview-light { opacity: 1; }
-        .download {
-            display: inline-flex;
-            gap: .5rem;
-            padding: .8rem 1.25rem .8rem 1.08rem;
-            border-radius: .7rem;
-            background: var(--button);
-            color: var(--button-text);
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .download svg { width: 1.35rem; height: 1.35rem; }
-        @media (hover: hover) {
-            .download:hover { background-color: color-mix(in srgb, var(--button) 88%, var(--button-text)); }
-        }
-        .download:focus-visible { background-color: color-mix(in srgb, var(--button) 88%, var(--button-text)); }
-        .download:active { background-color: color-mix(in srgb, var(--button) 78%, var(--button-text)); }
-        .requirements { margin: .72rem 0 0; font-size: .82rem; color: var(--muted); }
-        .requirements span { margin: 0 .2rem; }
-        footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.3rem 0;
-            color: var(--muted);
-            font-size: .8rem;
-        }
-        footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
-
         @media (prefers-reduced-motion: no-preference) {
-            :root { transition: background-color 180ms ease-in-out, color 180ms ease-in-out; }
-            .description, .requirements, footer { transition: color 180ms; }
-            .theme-toggle span {
-                transition: transform 180ms cubic-bezier(.45, 0, .2, 1), background-color 180ms, color 180ms;
-            }
-            .theme-toggle::before { transition: background-color 180ms, border-color 180ms; }
-            .theme-toggle svg { transition: opacity 130ms ease-in-out, transform 180ms ease-in-out; }
-            .preview img { transition: opacity 180ms ease-in-out; }
-            .download { transition: background-color 200ms ease-in-out; }
+            :root { scroll-behavior: smooth; }
+            .site-header { transition: background-color 300ms, box-shadow 300ms; }
+            .app-icon { animation: enter 650ms ease-out both; }
+            @keyframes enter { from { opacity: 0; transform: translateY(.55rem); } }
         }
-
-        @media (max-width: 32rem) {
-            .site-header { min-height: 4rem; }
-            .hero { gap: 1.75rem; }
-            .description { margin-top: .75rem; }
+        @media (max-width: 42rem) {
+            .site-header { width: calc(100% - 1.5rem); padding-inline: .75rem; }
+            .wrap { width: calc(100% - 2.5rem); }
+            .tabs-feature, .features-grid { grid-template-columns: minmax(0, 1fr); }
+            .features-grid { gap: 2.5rem; }
+        }
+        @media (max-width: 28rem) {
+            .site-header { gap: .5rem; }
+            .footer-inner { gap: .75rem; }
         }
     </style>
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="index.html" aria-label="Jotting home"><img src="public/icon.png" width="39" height="39" alt="">Jotting</a>
-        <a class="github-link" href="https://github.com/exelban/jotting">GitHub</a>
+        <a class="brand" href="#top" aria-label="Jotting home"><img src="public/icon.png" width="29" height="29" alt="">Jotting</a>
+        <a class="header-github" href="https://github.com/exelban/jotting">GitHub</a>
+        <a class="download" href="https://github.com/exelban/jotting/releases/latest/download/Jotting.dmg" download>Download</a>
     </header>
-    <main>
+    <main id="top">
         <section class="hero" aria-labelledby="headline">
-            <div class="intro">
+            <div class="wrap">
+                <img class="app-icon" src="public/icon.png" width="128" height="128" alt="">
                 <h1 id="headline">A scratchpad for your Mac.</h1>
-                <p class="description">Jot down a thought, close the window, and pick up where you left off.</p>
-            </div>
-            <div class="preview">
-                <img class="preview-dark" src="public/dark.png" width="1624" height="784" alt="Jotting on macOS showing a photo walk note with Field notes, Packing list, and Ideas tabs.">
-                <img class="preview-light" src="public/light.png" width="1624" height="784" alt="">
-            </div>
-            <div class="actions">
+                <p class="description">Press Control + comma to jot down a thought. Jotting saves it on your Mac as you type.</p>
                 <a class="download" href="https://github.com/exelban/jotting/releases/latest/download/Jotting.dmg" download>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.1 12.5c0-2 1.6-3.1 1.7-3.2-1-1.5-2.6-1.7-3.1-1.7-1.3-.2-2.5.8-3.2.8-.7 0-1.6-.8-2.7-.8-1.4 0-2.7.8-3.4 2-1.4 2.4-.4 6 1 8 .7 1 1.4 2 2.5 2s1.4-.7 2.7-.7 1.7.7 2.8.7 1.8-1 2.5-2c.8-1.1 1.1-2.2 1.2-2.3-.1 0-2-.8-2-2.8ZM15.1 6.3c.6-.7 1.1-1.8 1-2.8-1 .1-2.1.6-2.8 1.3-.6.6-1.2 1.7-1 2.7 1 .1 2.1-.5 2.8-1.2Z"/></svg>
                     Download for Mac
                 </a>
-                <p class="requirements">Free <span>·</span> macOS 14 or later</p>
+                <p class="requirements">Free · macOS 14 or later</p>
+                <figure class="stage">
+                    <div class="preview" role="img" aria-label="Jotting’s full macOS window with the Workshop note open beside Reading list and Ideas tabs.">
+                        <img class="preview-dark" src="public/dark.png" width="1744" height="1184" alt="">
+                        <img class="preview-light" src="public/light.png" width="1744" height="1184" alt="">
+                    </div>
+                </figure>
             </div>
+        </section>
+        <section class="wrap section" id="features" aria-labelledby="features-heading">
+            <h2 id="features-heading">Inside the scratchpad</h2>
+            <article class="tabs-feature">
+                <div>
+                    <h3>A tab for each thought.</h3>
+                    <p class="feature-copy">Keep field notes beside a packing list. Give each tab a name, reorder it, or move it to its own window.</p>
+                </div>
+                <img src="public/preview.png" loading="lazy" width="1576" height="800" alt="Five Jotting windows with distinct color themes and their own sets of tabs.">
+            </article>
+            <div class="features-grid">
+                <article>
+                    <div class="sample" aria-hidden="true"><div class="keycaps"><kbd>⌃</kbd><kbd>,</kbd></div></div>
+                    <h3>Open it from anywhere.</h3>
+                    <p class="feature-copy">Control + comma brings Jotting to the front. Press it again to close the window. You can choose your own shortcut in Settings.</p>
+                </article>
+                <article>
+                    <div class="sample color-sample">
+                        <div class="palettes" role="radiogroup" aria-label="Preview an editor theme">
+                            <label><input type="radio" name="palette" value="dracula" checked>Dracula</label>
+                            <label><input type="radio" name="palette" value="tokyo">Tokyo Night</label>
+                            <label><input type="radio" name="palette" value="gruvbox">Gruvbox</label>
+                        </div>
+                        <div class="theme-note"><p>Sunday errands</p><p>Pick up the film before noon.</p></div>
+                    </div>
+                    <h3>Write in your colors.</h3>
+                    <p class="feature-copy">Choose a built-in theme or define your own light and dark palettes. Adjust the font, line height, and size to suit your eyes.</p>
+                </article>
+            </div>
+        </section>
+        <section class="closing" aria-labelledby="download-heading">
+            <img loading="lazy" src="public/icon.png" width="64" height="64" alt="">
+            <h2 id="download-heading">Get Jotting for Mac.</h2>
+            <a class="download" href="https://github.com/exelban/jotting/releases/latest/download/Jotting.dmg" download>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.1 12.5c0-2 1.6-3.1 1.7-3.2-1-1.5-2.6-1.7-3.1-1.7-1.3-.2-2.5.8-3.2.8-.7 0-1.6-.8-2.7-.8-1.4 0-2.7.8-3.4 2-1.4 2.4-.4 6 1 8 .7 1 1.4 2 2.5 2s1.4-.7 2.7-.7 1.7.7 2.8.7 1.8-1 2.5-2c.8-1.1 1.1-2.2 1.2-2.3-.1 0-2-.8-2-2.8ZM15.1 6.3c.6-.7 1.1-1.8 1-2.8-1 .1-2.1.6-2.8 1.3-.6.6-1.2 1.7-1 2.7 1 .1 2.1-.5 2.8-1.2Z"/></svg>
+                Download for Mac
+            </a>
+            <p class="requirements">Free · macOS 14 or later</p>
         </section>
     </main>
     <footer>
-        <span>© 2026 Jotting by <a href="https://serhiy.io">exelban</a></span>
-        <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="true" hidden>
-            <span aria-hidden="true">
-                <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
-                <svg class="moon" viewBox="0 0 24 24"><path d="M20.6 13.1A8.8 8.8 0 0 1 10.9 3.4a8.8 8.8 0 1 0 9.7 9.7Z"/></svg>
-            </span>
-        </button>
+        <div class="wrap footer-inner">
+            <span>© 2026 Jotting by <a href="https://serhiy.io">exelban</a></span>
+            <a href="https://github.com/exelban/jotting">GitHub</a>
+            <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="true" hidden>
+                <span aria-hidden="true">
+                    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                    <svg class="moon" viewBox="0 0 24 24"><path d="M20.6 13.1A8.8 8.8 0 0 1 10.9 3.4a8.8 8.8 0 1 0 9.7 9.7Z"/></svg>
+                </span>
+            </button>
+        </div>
     </footer>
     <script>
+        const header = document.querySelector('.site-header');
         const themeToggle = document.querySelector('.theme-toggle');
+
+        function updateHeader() {
+            header.classList.toggle('scrolled', window.scrollY > 8);
+        }
+
+        updateHeader();
+        window.addEventListener('scroll', updateHeader, { passive: true });
 
         function applyTheme(theme) {
             document.documentElement.dataset.theme = theme;
