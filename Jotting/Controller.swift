@@ -445,12 +445,14 @@ final class Controller: NSObject, NSMenuDelegate, NSMenuItemValidation {
             return
         }
         
+        self.openFile(url)
+    }
+    
+    func openFile(_ url: URL) {
         let owner = self.session.state.windows.first { group in
             group.tabs.contains { self.session.state.files?[$0.uuidString] == url }
         }
-        if let owner {
-            self.present(owner.id)
-        }
+        self.present(owner?.id ?? self.current.id)
         self.change { try self.session.add(from: url, in: self.current.id) }
     }
     

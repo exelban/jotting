@@ -15,6 +15,7 @@ import AppKit
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var controller: Controller?
+    private var pendingURLs: [URL] = []
     
     static func main() {
         let app = NSApplication.shared
@@ -43,6 +44,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
         
         self.controller?.start()
+        for url in self.pendingURLs {
+            self.controller?.openFile(url)
+        }
+        self.pendingURLs.removeAll()
+    }
+    
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard let controller = self.controller else {
+            self.pendingURLs.append(contentsOf: urls)
+            return
+        }
+        
+        for url in urls {
+            controller.openFile(url)
+        }
     }
     
     @objc private func workspaceWillSleep(_ notification: Notification) {

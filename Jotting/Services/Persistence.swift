@@ -133,7 +133,9 @@ final class BufferStore {
 }
 
 final class SessionManager {
-    static let noteExtensions = ["txt", "md"]
+    static let noteExtensions = [
+        "txt", "md", "markdown", "mdown", "mkd", "log", "json", "yaml", "yml", "toml", "ini", "csv", "tsv"
+    ]
     private static let historyLimit = 30
     private let file: URL
     private let settingsFile: URL
@@ -283,7 +285,7 @@ final class SessionManager {
     
     private func validateNote(_ url: URL) throws {
         guard url.isFileURL, Self.noteExtensions.contains(url.pathExtension.lowercased()) else {
-            throw StorageError("Choose a .txt or .md file.")
+            throw StorageError("Supported file extensions: " + Self.noteExtensions.joined(separator: ", ") + ".")
         }
     }
     
