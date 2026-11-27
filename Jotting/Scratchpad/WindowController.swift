@@ -84,7 +84,7 @@ final class WindowController: NSObject, NSWindowDelegate {
         self.tabs.applyTheme()
     }
     
-    func setUpdate(_ version: String?) {
+    func setUpdate(_ version: String?, installing: Bool) {
         guard let version else {
             self.updateBadge?.removeFromSuperview()
             self.updateBadge = nil
@@ -92,18 +92,20 @@ final class WindowController: NSObject, NSWindowDelegate {
         }
         
         if self.updateBadge == nil {
-            let badge = UpdateBadge(title: "Update available", target: self.updateTarget, action: self.updateAction)
+            let badge = UpdateBadge(title: "", target: self.updateTarget, action: self.updateAction)
             badge.isBordered = false
             badge.controlSize = .small
-            badge.attributedTitle = NSAttributedString(
-                string: badge.title,
-                attributes: [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11, weight: .medium)])
             badge.image = NSImage(systemSymbolName: "arrow.down.circle", accessibilityDescription: nil)?
                 .withSymbolConfiguration(.init(paletteColors: [.white]))
             self.cornerOverlay.insertArrangedSubview(badge, at: 0)
             self.updateBadge = badge
         }
-        self.updateBadge?.toolTip = "Jotting \(version) is available"
+        self.updateBadge?.attributedTitle = NSAttributedString(
+            string: installing ? "Installing a new version…" : "Update available",
+            attributes: [.foregroundColor: NSColor.white, .font: NSFont.systemFont(ofSize: 11, weight: .medium)])
+        self.updateBadge?.isEnabled = !installing
+        self.updateBadge?.toolTip = installing ? "Installing Jotting \(version)" : "Jotting \(version) is available"
+        self.updateBadge?.invalidateIntrinsicContentSize()
     }
     
     func detachEditor() {
@@ -356,7 +358,7 @@ private final class UpdateBadge: NSButton {
         let accent = NSColor.controlAccentColor
         if self.isHighlighted {
             (accent.shadow(withLevel: 0.2) ?? accent).setFill()
-        } else if (self.window as? ScratchpadWindow)?.hoveredBadge === self {
+        } else if self.isEnabled, (self.window as? ScratchpadWindow)?.hoveredBadge === self {
             (accent.highlight(withLevel: 0.12) ?? accent).setFill()
         } else {
             accent.setFill()
@@ -417,7 +419,7 @@ private final class ScratchpadWindow: NSWindow {
             .first(where: { $0 is SettingsHelpButton || $0 is UpdateBadge }) as? NSButton {
             self.hoveredButton = button
             self.hoveredGutter = false
-            NSCursor.pointingHand.set()
+            (button.isEnabled ? NSCursor.pointingHand : NSCursor.arrow).set()
             return
         }
         if let welcomeOverlay, welcomeOverlay.visibleRect.contains(welcomeOverlay.convert(location, from: nil)) {

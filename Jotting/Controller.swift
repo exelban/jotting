@@ -21,7 +21,6 @@ final class Controller: NSObject, NSMenuDelegate, NSMenuItemValidation {
     private let menus = Menus()
     private let shortcut = ShortcutManager()
     private lazy var updater = UpdateController(session: self.session)
-    private var availableUpdate: String?
     private var windows: [UUID: WindowController] = [:]
     private var editors: [UUID: EditorView] = [:]
     private var active: UUID
@@ -43,14 +42,13 @@ final class Controller: NSObject, NSMenuDelegate, NSMenuItemValidation {
     
     func start() {
         self.menus.install(for: self)
-        self.updater.onUpdate = { [weak self] version in
+        self.updater.onUpdate = { [weak self] in
             guard let self else {
                 return
             }
             
-            self.availableUpdate = version
             for controller in self.windows.values {
-                controller.setUpdate(version)
+                controller.setUpdate(self.updater.availableVersion, installing: self.updater.installing)
             }
         }
         self.updater.check(silently: true)
@@ -234,7 +232,7 @@ final class Controller: NSObject, NSMenuDelegate, NSMenuItemValidation {
         NSApp.activate(ignoringOtherApps: true)
         if self.windows[id] == nil {
             let controller = WindowController(config: self.config, updateTarget: self, updateAction: #selector(self.showUpdate))
-            controller.setUpdate(self.availableUpdate)
+            controller.setUpdate(self.updater.availableVersion, installing: self.updater.installing)
             let frameName = "Scratchpad-" + id.uuidString
             if let frame {
                 controller.window.setFrame(frame, display: false)

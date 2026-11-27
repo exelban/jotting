@@ -28,7 +28,5 @@
     </array>
     <key>LSUIElement</key>
     <true/>
-    <key>LSMultipleInstancesProhibited</key>
-    <true/>
 </dict>
 </plist>

@@ -17,11 +17,16 @@ final class UpdateController {
     private let provider = Updater.Github(user: "exelban", repo: "jotting", asset: "Jotting.dmg")
     private let updater: Updater
     private let session: SessionManager
-    private var available: (version: String, url: URL?)?
+    private var available: (version: String, url: URL?)? {
+        didSet { self.onUpdate?() }
+    }
     private var interactive = false
     private var checking = false
-    private var installing = false
-    var onUpdate: ((String?) -> Void)?
+    var availableVersion: String? { self.available?.version }
+    var onUpdate: (() -> Void)?
+    private(set) var installing = false {
+        didSet { self.onUpdate?() }
+    }
     
     init(session: SessionManager) {
         self.session = session
@@ -37,7 +42,6 @@ final class UpdateController {
         #if DEBUG
         if CommandLine.arguments.contains("--simulate-update") {
             self.available = ("1.1.0", nil)
-            self.onUpdate?("1.1.0")
             if !silently {
                 self.showUpdate()
             }
@@ -62,6 +66,9 @@ final class UpdateController {
         self.checking = false
         let interactive = self.interactive
         self.interactive = false
+        guard !self.installing else {
+            return
+        }
         guard let release, let url = URL(string: release.url),
             url.scheme == "https", url.host == "github.com",
             url.path.hasPrefix("/exelban/jotting/releases/download/"), url.lastPathComponent == "Jotting.dmg"
@@ -75,13 +82,11 @@ final class UpdateController {
         let installed = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
         if release.tag.isUpdate(for: Updater.Tag(installed)) {
             self.available = (release.tag.raw, url)
-            self.onUpdate?(release.tag.raw)
             if interactive {
                 self.showUpdate()
             }
         } else {
             self.available = nil
-            self.onUpdate?(nil)
             if interactive {
                 let alert = NSAlert()
                 alert.messageText = "Jotting is up to date"

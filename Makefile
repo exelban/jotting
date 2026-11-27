@@ -10,6 +10,7 @@ DEVELOPMENT_TEAM ?= RP2S87B72W
 .PHONY: build lint
 
 build: lint
+	xcrun agvtool next-version
 	xcodebuild -project "$(APP).xcodeproj" -scheme "$(APP)" \
 		-configuration Release -destination 'generic/platform=macOS' \
 		-derivedDataPath "$(DERIVED_DATA)" CODE_SIGN_STYLE=Manual CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
